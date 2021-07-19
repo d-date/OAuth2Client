@@ -17,12 +17,12 @@ public class OAuth2Client: NSObject {
   public func signIn(with request: Request) -> Future<Credential, OAuth2Error> {
     return Future { [weak self, logger] completion in
       guard let self = self else { return }
-      guard let components = URLComponents(string: request.redirectUri),
-        let callbackScheme = components.scheme
-      else {
-        completion(.failure(OAuth2Error.invalidRedirectUri))
-        return
-      }
+
+        guard let components = URLComponents(string: request.redirectUri) else {
+            completion(.failure(OAuth2Error.invalidRedirectUri))
+            return
+        }
+      let callbackScheme = components.scheme ?? components.path
       let pkce = PKCE()
       self.requestAuth(url: request.buildAuthorizeURL(pkce: pkce), callbackScheme: callbackScheme)
         .flatMap { return self.requestToken(for: request.buildTokenURL(code: $0, pkce: pkce)) }
