@@ -4,5 +4,5 @@ format:
 		--in-place \
 		--recursive \
 		./Package.swift \
-		./Sources/
+		./Sources/ \
 		./Tests/
