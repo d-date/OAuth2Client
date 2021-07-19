@@ -45,10 +45,10 @@ public struct Credential: Equatable, Codable {
   }
 }
 
-public extension Credential {
+extension Credential {
   private static let key = "CredentialKey"
 
-  func save() {
+  public func save() {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
     encoder.outputFormatting = .prettyPrinted
@@ -56,13 +56,15 @@ public extension Credential {
     UserDefaults.standard.set(data, forKey: Credential.key)
   }
 
-  static func load() -> Credential? {
+  public static func load() -> Credential? {
     guard let credentialsData = UserDefaults.standard.data(forKey: key),
-          let credentials = try? JSONDecoder.convertFromSnakeCase.decode(Credential.self, from: credentialsData) else { return nil }
+      let credentials = try? JSONDecoder.convertFromSnakeCase.decode(
+        Credential.self, from: credentialsData)
+    else { return nil }
     return credentials
   }
 
-  static func remove() {
+  public static func remove() {
     UserDefaults.standard.setValue(nil, forKey: Credential.key)
   }
 }

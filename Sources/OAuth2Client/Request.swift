@@ -8,7 +8,9 @@ public struct Request {
   let redirectUri: String
   let scopes: [String]
 
-  public init(authorizeURL: String, tokenURL: String, clientId: String, redirectUri: String, scopes: [String]) {
+  public init(
+    authorizeURL: String, tokenURL: String, clientId: String, redirectUri: String, scopes: [String]
+  ) {
     self.authorizeURL = authorizeURL
     self.tokenURL = tokenURL
     self.clientId = clientId
@@ -23,7 +25,7 @@ extension Request {
       URLQueryItem(name: "client_id", value: clientId),
       URLQueryItem(name: "redirect_uri", value: redirectUri),
       URLQueryItem(name: "response_type", value: "code"),
-      URLQueryItem(name: "scope", value: scopes.joined(separator: "+"))
+      URLQueryItem(name: "scope", value: scopes.joined(separator: "+")),
     ]
 
     if let pkce = pkce {
@@ -41,7 +43,7 @@ extension Request {
       URLQueryItem(name: "client_id", value: clientId),
       URLQueryItem(name: "code", value: code),
       URLQueryItem(name: "grant_type", value: "authorization_code"),
-      URLQueryItem(name: "redirect_uri", value: redirectUri)
+      URLQueryItem(name: "redirect_uri", value: redirectUri),
     ]
 
     if let pkce = pkce {
@@ -57,7 +59,7 @@ extension Request {
     let queryItems = [
       URLQueryItem(name: "client_id", value: clientId),
       URLQueryItem(name: "grant_type", value: "refresh_token"),
-      URLQueryItem(name: "refresh_token", value: refreshToken)
+      URLQueryItem(name: "refresh_token", value: refreshToken),
     ]
     var components = URLComponents(string: tokenURL)!
     components.queryItems = queryItems

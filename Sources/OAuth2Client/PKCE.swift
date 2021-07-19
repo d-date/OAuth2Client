@@ -1,6 +1,6 @@
-import Foundation
 import CommonCrypto
 import CryptoKit
+import Foundation
 import os.log
 
 public struct PKCE {
@@ -17,7 +17,8 @@ public struct PKCE {
   }
 
   public static func codeChallenge(codeVerifier: String) -> String {
-    return codeVerifier
+    return
+      codeVerifier
       .data(using: .utf8)!
       .sha256()
       .base64urlEncodedString()

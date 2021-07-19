@@ -8,7 +8,7 @@ let package = Package(
   products: [
     .library(
       name: "OAuth2Client",
-      targets: ["OAuth2Client"]),
+      targets: ["OAuth2Client"])
   ],
   dependencies: [],
   targets: [
