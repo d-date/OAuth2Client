@@ -33,7 +33,6 @@ extension Request {
 
     var components = URLComponents(string: authorizeURL)!
     components.queryItems = queryItems
-    print(components.url!)
     return components.url!
   }
 
@@ -51,7 +50,6 @@ extension Request {
 
     var components = URLComponents(string: tokenURL)!
     components.queryItems = queryItems
-    print(components.url!)
     return components.url!
   }
 
@@ -63,7 +61,6 @@ extension Request {
     ]
     var components = URLComponents(string: tokenURL)!
     components.queryItems = queryItems
-    print(components.url!)
     return components.url!
   }
 }

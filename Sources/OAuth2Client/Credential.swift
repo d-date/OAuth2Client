@@ -6,6 +6,7 @@ public struct Credential: Equatable, Codable {
   public let refreshToken: String
   public let scope: String?
   public let expiresIn: Int?
+  public let idToken: String?
 
   enum CodingKeys: String, CodingKey {
     case accessToken
@@ -13,6 +14,7 @@ public struct Credential: Equatable, Codable {
     case refreshToken
     case scope
     case expiresIn, expires
+    case idToken
   }
 
   public init(from decoder: Decoder) throws {
@@ -21,6 +23,7 @@ public struct Credential: Equatable, Codable {
     tokenType = try container.decode(String.self, forKey: .tokenType)
     refreshToken = try container.decode(String.self, forKey: .refreshToken)
     scope = try? container.decode(String.self, forKey: .scope)
+    idToken = try? container.decode(String.self, forKey: .idToken)
 
     var expiresIn: Int?
     if let expires = try? container.decode(Int.self, forKey: .expires) {
@@ -38,6 +41,7 @@ public struct Credential: Equatable, Codable {
     try container.encode(refreshToken, forKey: .refreshToken)
     try? container.encode(scope, forKey: .scope)
     try? container.encode(expiresIn, forKey: .expiresIn)
+    try? container.encode(idToken, forKey: .idToken)
   }
 }
 
