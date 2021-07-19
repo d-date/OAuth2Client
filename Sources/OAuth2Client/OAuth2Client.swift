@@ -8,8 +8,14 @@ public class OAuth2Client: NSObject {
 
   private var cancellables: [AnyCancellable] = []
 
+  var logger: Logger
+
+  public init(logger: Logger = .init()) {
+    self.logger = logger
+  }
+
   public func signIn(with request: Request) -> Future<Credential, OAuth2Error> {
-    return Future { [weak self] completion in
+    return Future { [weak self, logger] completion in
       guard let self = self else { return }
       guard let components = URLComponents(string: request.redirectUri),
             let callbackScheme = components.scheme else {
@@ -22,13 +28,13 @@ public class OAuth2Client: NSObject {
         .sink { (result) in
           switch result {
             case .failure(let error):
-              print(error)
+              logger.error("\(error.localizedDescription)")
               completion(.failure(error))
             default: break
           }
-        } receiveValue: { credential in
+        } receiveValue: { [logger] credential in
+          logger.debug("\(credential.accessToken)")
           completion(.success(credential))
-          print(credential)
         }
         .store(in: &self.cancellables)
 
@@ -66,14 +72,12 @@ public class OAuth2Client: NSObject {
         .sink { (result) in
           switch result {
             case .failure(let error):
-              print(error)
               completion(.failure(error))
             default: break
           }
         } receiveValue: { credential in
           credential.save()
           completion(.success(credential))
-          print(credential)
         }
         .store(in: &self.cancellables)
     }

@@ -17,7 +17,6 @@ public struct PKCE {
   }
 
   public static func codeChallenge(codeVerifier: String) -> String {
-    print("codeVerifier:", codeVerifier)
     return codeVerifier
       .data(using: .utf8)!
       .sha256()
