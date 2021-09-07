@@ -10,68 +10,46 @@ Lightweight OAuth 2.0 Client with PKCE (Proof key for Code Exchange: see [RFC 76
 ### Sign in
 
 ```swift
-OAuth2Client().signIn(request: request) 
-  .receive(on: yourQueue)
-  .sink(receiveCompletion: { (completion) in
-    
-  }, receiveValue: { (credential) in
-    credential.save()
-  })
-```
-
-### Load Access Token
-
-```swift
-Credential.load()
+  let credential = await OAuth2Client().signIn(request: request) 
 ```
 
 ### Refresh
 
 ```swift
-OAuth2Client().refresh(request: request) 
-.receive(on: yourQueue)
-.sink(receiveCompletion: { (completion) in
-
-}, receiveValue: { (credential) in
-credential.save()
-})
+let credential = await OAuth2Client().refresh(request: request) 
 ```
 
 ### Sign Out
-Removing cache on WebKit, and showing new auth screen.
+Removing cache on WebKit, and show new screen to authenticate.
 
 ```swift
-OAuth2Client().signOut(request: request) 
-  .receive(on: yourQueue)
-  .sink(receiveCompletion: { (completion) in
-
-  }, receiveValue: { (credential) in
-    credential.save()
-  })
+let credential = await OAuth2Client().signOut(request: request) 
 ```
 
 ## Features
 
 - [x] Supporting OAuth 2.0 with PKCE
 - [x] Publish / refresh access token
-- [x] Combine interface
+- [x] Swift Concurrency interface
+
+Note: If you want to use Combine interface, use 0.x version
 
 ## General notes for OAuth 2.0
 - Make sure setting callback url scheme on your setting
 
 ## Supported platforms
 
-- macOS v11.0 and later
-- iOS / iPadOS v14.0 and later
+- macOS v12.0 or later
+- iOS / iPadOS v15.0 or later
+
+Note: After Swift Concurrency is backported, iOS 13.0 / macOS 10.15 can be used
 
 ## Installation
-
-Only support via Swift package manager installation.
 
 ### Swift Package Manager
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/d-date/OAuth2Client.git", from: "0.1.0")
+  .package(url: "https://github.com/d-date/OAuth2Client.git", .branch("concurrency"))
 ]
 ```

@@ -48,6 +48,7 @@ public struct Credential: Equatable, Codable {
 extension Credential {
   private static let key = "CredentialKey"
 
+  @available(*, deprecated, message: "Store credential by yourself")
   public func save() {
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
@@ -56,6 +57,7 @@ extension Credential {
     UserDefaults.standard.set(data, forKey: Credential.key)
   }
 
+  @available(*, deprecated, message: "Load credential by yourself")
   public static func load() -> Credential? {
     guard let credentialsData = UserDefaults.standard.data(forKey: key),
       let credentials = try? JSONDecoder.convertFromSnakeCase.decode(
@@ -64,6 +66,7 @@ extension Credential {
     return credentials
   }
 
+  @available(*, deprecated, message: "Remove credential by yourself")
   public static func remove() {
     UserDefaults.standard.setValue(nil, forKey: Credential.key)
   }
