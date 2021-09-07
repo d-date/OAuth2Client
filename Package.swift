@@ -4,7 +4,7 @@ import PackageDescription
 
 let package = Package(
   name: "OAuth2Client",
-  platforms: [.iOS(.v14), .macOS(.v11)],
+  platforms: [.iOS("15.0"), .macOS("12.0")],
   products: [
     .library(
       name: "OAuth2Client",
