@@ -3,6 +3,7 @@ import Foundation
 import WebKit
 import os.log
 
+@available(iOS 15.0, macOS 12.0, *)
 public actor OAuth2Client: NSObject {
 
   var logger: Logger
@@ -37,12 +38,14 @@ public actor OAuth2Client: NSObject {
   }
 }
 
+@available(iOS 15.0, macOS 12.0, *)
 extension OAuth2Client: ASWebAuthenticationPresentationContextProviding {
   nonisolated public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
     .init()
   }
 }
 
+@available(iOS 15.0, macOS 12.0, *)
 extension OAuth2Client {
   fileprivate func requestAuth(url: URL, callbackScheme: String) async throws -> String {
     let url: URL = try await withCheckedThrowingContinuation { continuation in
